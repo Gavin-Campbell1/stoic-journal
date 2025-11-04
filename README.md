@@ -22,7 +22,8 @@ The first run creates a SQLite database at `~/.stoic_journal/journal.sqlite3`. U
 
 ## Automating the morning prompt
 - **Windows Task Scheduler:** create a basic task that runs `python -m stoic_journal` at your preferred time. Choose "Start a program" and point to your Python interpreter; pass `-m stoic_journal` as the argument.
-- **macOS/Linux cron:** add a crontab entry such as `0 7 * * * /usr/bin/env python -m stoic_journal` to trigger it daily at 7 a.m.
+- **UPDATE ON AUTOMATION** I have scheduled a daily task that runs at 0700 every day.
+
 
 ## Extending
 - Adjust the prompt text by editing `DEFAULT_PROMPT` in `stoic_journal/journal.py`.

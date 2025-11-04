@@ -130,12 +130,13 @@ def run(argv: list[str] | None = None) -> int:
 
     command = args.command or "write"
     if command == "write":
-        entry_date = (
-            args.date if isinstance(args.date, date) else date.fromisoformat(args.date)
-        )
-        return handle_write(app, entry_date=entry_date, allow_overwrite=args.force)
+        raw_date = getattr(args, "date", date.today())
+        entry_date = raw_date if isinstance(raw_date, date) else date.fromisoformat(raw_date)
+        force = bool(getattr(args, "force", False))
+        return handle_write(app, entry_date=entry_date, allow_overwrite=force)
     if command == "list":
-        return handle_list(app, limit=args.limit)
+        limit = int(getattr(args, "limit", 5))
+        return handle_list(app, limit=limit)
 
     parser.print_help()
     return 0
