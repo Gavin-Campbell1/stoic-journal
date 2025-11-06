@@ -1,1 +1,21 @@
-%/.stoic_journal/journal.sqlite3
+# Python artifacts
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Virtual environments
+.venv/
+venv/
+
+# Local data
+*.sqlite3
+.db
+.DS_Store
+scratch.py
+
+# Streamlit cache
+.streamlit/
+
+# IDE
+.vscode/

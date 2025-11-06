@@ -6,8 +6,9 @@ import json
 import random
 import urllib.error
 import urllib.request
-from dataclasses import dataclass
 from typing import Optional
+
+from .models import Quote
 
 
 API_URLS = [
@@ -28,13 +29,6 @@ FALLBACK_QUOTES = [
     ),
     ("No man is free who is not master of himself.", "Epictetus"),
 ]
-
-
-@dataclass(frozen=True)
-class Quote:
-    text: str
-    author: Optional[str] = None
-
 
 def _parse_payload(payload: dict) -> Optional[Quote]:
     text = payload.get("text") or payload.get("body")
