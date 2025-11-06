@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS entries (
 """
 
 
-class JournalDatabase:
+class JournalStorage:
     """Lightweight wrapper around SQLite for storing journal entries."""
 
     def __init__(self, db_path: Path) -> None:
@@ -50,13 +50,23 @@ class JournalDatabase:
         response: str,
         quote: str,
         quote_source: Optional[str] = None,
+        *,
+        overwrite: bool = False,
     ) -> int:
         with self._connection() as conn:
-            cursor = conn.execute(
+            statement = (
                 """
+                INSERT OR REPLACE INTO entries (entry_date, prompt, response, quote, quote_source)
+                VALUES (?, ?, ?, ?, ?)
+                """
+                if overwrite
+                else """
                 INSERT INTO entries (entry_date, prompt, response, quote, quote_source)
                 VALUES (?, ?, ?, ?, ?)
-                """,
+                """
+            )
+            cursor = conn.execute(
+                statement,
                 (entry_date, prompt, response, quote, quote_source),
             )
             return int(cursor.lastrowid)
